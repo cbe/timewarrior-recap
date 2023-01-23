@@ -1,0 +1,7 @@
+{
+  "name": "timewarrior-recap",
+  "scripts": {
+    "start": "node app/index.js"
+  },
+  "packageManager": "yarn@3.3.1",
+}
