@@ -1,7 +1,12 @@
 {
   "name": "timewarrior-recap",
   "scripts": {
-    "start": "node app/index.js"
+    "start": "node app/index.js",
+    "test": "jest app/*.spec.js",
+    "test:watch": "jest --watch app/*.spec.js"
   },
   "packageManager": "yarn@3.3.1",
+  "dependencies": {
+    "jest": "^29.3.1"
+  }
 }
