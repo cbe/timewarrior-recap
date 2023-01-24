@@ -3,7 +3,8 @@
   "scripts": {
     "start": "node app/index.js",
     "test": "jest app/*.spec.js",
-    "test:watch": "jest --watch app/*.spec.js"
+    "test:watch": "jest --watch app/*.spec.js",
+    "build": "esbuild app/index.js --bundle --platform=node --outfile=dist/timewarrior-recap.js"
   },
   "packageManager": "yarn@3.3.1",
   "dependencies": {

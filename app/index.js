@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const { createInterface } = require("readline");
+const { timewarriorRecap } = require("./timewarrior-recap.js");
 
 const readline = createInterface({
   input: process.stdin,
@@ -30,6 +31,6 @@ readline.on("line", (line) => {
 });
 
 readline.once("close", () => {
-  const reportJson = JSON.parse(gatheredJsonLines.join(""));
-  console.log(reportJson);
+  const report = JSON.parse(gatheredJsonLines.join(""));
+  console.log(timewarriorRecap(report));
 });
