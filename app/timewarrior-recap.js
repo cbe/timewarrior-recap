@@ -1,4 +1,6 @@
-const { parseISO, differenceInMinutes } = require("date-fns");
+const { parseISO, differenceInMinutes, formatDuration, minutesToHours } = require("date-fns");
+
+const streamlineTags = (tags = []) => tags.sort().join(", ");
 
 exports.timewarriorRecap = (input) =>
   input
@@ -27,4 +29,16 @@ exports.timewarriorRecap = (input) =>
       }
 
       return accumulator;
-    }, []);
+    }, [])
+    .map((activity) => {
+      const { durationInMinutes, ...rest } = activity;
+      const hours = minutesToHours(durationInMinutes);
+      const minutes = durationInMinutes % 60;
+      const readableDuration = formatDuration({ hours, minutes });
+
+      return {
+        ...rest,
+        durationInMinutes,
+        readableDuration
+      };
+    });

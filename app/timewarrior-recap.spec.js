@@ -38,4 +38,17 @@ describe("timewarriorRecap", () => {
       { durationInMinutes: 225, tags: ["tag1", "tag2"] }
     );
   });
+
+  it("should provide a more readable duration", () => {
+    const input = [
+      { start: "20230123T081500Z", end: "20230123T103000Z" },
+      { start: "20230123T123000Z", end: "20230123T140000Z" }
+    ];
+
+    const result = timewarriorRecap(input);
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject(
+      { readableDuration: "3 hours 45 minutes" }
+    );
+  });
 });
