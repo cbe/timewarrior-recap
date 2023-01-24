@@ -25,4 +25,17 @@ describe("timewarriorRecap", () => {
     const result = timewarriorRecap(input);
     expect(result).toHaveLength(0);
   });
+
+  it("should merge intervals with the same tags", () => {
+    const input = [
+      { start: "20230123T081500Z", end: "20230123T103000Z", tags: ["tag1", "tag2"]  },
+      { start: "20230123T123000Z", end: "20230123T140000Z", tags: ["tag2", "tag1"]  }
+    ];
+
+    const result = timewarriorRecap(input);
+    expect(result).toHaveLength(1);
+    expect(result[0]).toMatchObject(
+      { durationInMinutes: 225, tags: ["tag1", "tag2"] }
+    );
+  });
 });

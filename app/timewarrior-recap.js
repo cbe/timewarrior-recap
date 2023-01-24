@@ -10,4 +10,21 @@ exports.timewarriorRecap = (input) =>
       const durationInMinutes = Math.abs(differenceInMinutes(start, end));
 
       return { durationInMinutes, tags: givenTags };
-    });
+    })
+    .reduce((accumulator, currentValue) => {
+      const { tags, durationInMinutes } = currentValue;
+      const streamlinedTags = streamlineTags(tags);
+
+      const streamlinedTagIntervalIndex = accumulator.findIndex((interval) =>
+        streamlineTags(interval.tags) === streamlinedTags
+      );
+      if (streamlinedTagIntervalIndex >= 0) {
+        accumulator[streamlinedTagIntervalIndex].durationInMinutes =
+          accumulator[streamlinedTagIntervalIndex].durationInMinutes + durationInMinutes;
+      }
+      else {
+        accumulator.push(currentValue);
+      }
+
+      return accumulator;
+    }, []);
