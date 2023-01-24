@@ -4,10 +4,10 @@ exports.timewarriorRecap = (input) =>
   input
     .filter((interval) => interval.end)
     .map((interval) => {
-      const { id, start: startIso, end: endIso } = interval;
+      const { start: startIso, end: endIso, tags: givenTags } = interval;
       const start = parseISO(startIso);
       const end = parseISO(endIso);
       const durationInMinutes = Math.abs(differenceInMinutes(start, end));
 
-      return { id, durationInMinutes };
+      return { durationInMinutes, tags: givenTags };
     });
