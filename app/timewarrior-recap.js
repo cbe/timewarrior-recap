@@ -1,1 +1,3 @@
-exports.timewarriorRecap = (input) => input;
+exports.timewarriorRecap = (input) =>
+  input
+    .filter((interval) => interval.end);
