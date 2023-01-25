@@ -9,6 +9,7 @@ describe("formatForLogging", () => {
 
     expect(formatForLogging(input)).toEqual(`
 Tags      Duration
+--------- ------------------
 foo, bar  3 hours 20 minutes
 baz, boom 5 minutes`);
   });

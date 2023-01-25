@@ -7,8 +7,15 @@ exports.formatForLogging = (table) => {
     return tagLength > greatestLength ? tagLength : greatestLength;
   }, "Tags".length);
 
+  const durationLength = table.reduce((greatestLength, row) => {
+    const durationLength = row.readableDuration.length;
+
+    return durationLength > greatestLength ? durationLength : greatestLength;
+  }, "Duration".length);
+
   const tagHeading = "Tags".padEnd(tagLength);
   const heading = `${tagHeading} Duration`;
+  const underline = `${"-".repeat(tagLength)} ${"-".repeat(durationLength)}`
   const tagDurationPairs = table.map((row) => {
     const tags = streamlineTagsForLogging(row.tags).padEnd(tagLength);
 
@@ -19,5 +26,6 @@ exports.formatForLogging = (table) => {
 
   return `
 ${heading}
+${underline}
 ${content}`;
 };
