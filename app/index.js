@@ -2,6 +2,7 @@
 
 const { createInterface } = require("readline");
 const { timewarriorRecap } = require("./timewarrior-recap.js");
+const { formatForLogging } = require("./format-for-logging.js");
 
 const readline = createInterface({
   input: process.stdin,
@@ -32,5 +33,6 @@ readline.on("line", (line) => {
 
 readline.once("close", () => {
   const report = JSON.parse(gatheredJsonLines.join(""));
-  console.log(timewarriorRecap(report));
+
+  console.log(formatForLogging(timewarriorRecap(report)));
 });
