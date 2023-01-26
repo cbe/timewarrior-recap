@@ -1,6 +1,13 @@
 const streamlineTagsForLogging = (tags = []) => tags.join(", ");
 
 exports.formatForLogging = (table) => {
+  if (!table.length) {
+    return `
+No filtered data found for given range, please check if the following command returns anything:
+
+    timew summary {your-given-range}`;
+  }
+
   const tagLength = table.reduce((greatestLength, row) => {
     const tagLength = streamlineTagsForLogging(row.tags).length;
 

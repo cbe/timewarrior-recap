@@ -8,7 +8,7 @@ const readline = createInterface({
   input: process.stdin,
 });
 
-// ini-style configuration, e.g.
+// Configuration block, values look like this:
 // debug: off
 // reports.day.cell: 15
 // temp.version: 1.4.3
