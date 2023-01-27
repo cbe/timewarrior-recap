@@ -14,12 +14,18 @@ const readline = createInterface({
 // temp.version: 1.4.3
 // verbose: on
 const configurationRegEx = new RegExp(/\w:\s.*$/);
+const configuration = new Map();
 const gatheredJsonLines = [];
 
 readline.on("line", (line) => {
   if (line.match(configurationRegEx)) {
-    // Currently nothing to do, we should evaluate timewarrior options like
-    // 'verbose' and 'debug' at some point as recommended by
+    // Characters used to separate between key and value are documented here
+    // https://timewarrior.net/docs/api/#input-format
+    const [key, value] = line.split(": ");
+    configuration.set(key, value);
+
+    // We should also evaluate timewarrior options like 'verbose' and 'debug'
+    // at some point as recommended by
     // https://timewarrior.net/docs/api/#guidelines
   }
   else if (line === "") {
