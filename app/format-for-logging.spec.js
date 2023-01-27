@@ -8,8 +8,7 @@ describe("formatForLogging", () => {
     ];
 
     expect(formatForLogging(input)).toEqual(`
-Tags      Duration
---------- ------------------
+\x1b[4mTags     \x1b[0m \x1b[4mDuration          \x1b[0m
 foo, bar  3 hours 20 minutes
 baz, boom 5 minutes`);
   });

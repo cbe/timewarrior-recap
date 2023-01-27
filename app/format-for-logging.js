@@ -1,5 +1,7 @@
 const streamlineTagsForLogging = (tags = []) => tags.join(", ");
 
+const underlineString = (string) => `\x1b[4m${string}\x1b[0m`;
+
 const USAGE = `
 No filtered data found for given range and/or tag, please check if the following command returns anything:
 
@@ -26,9 +28,9 @@ exports.formatForLogging = (table) => {
     return durationLength > greatestLength ? durationLength : greatestLength;
   }, "Duration".length);
 
-  const tagHeading = "Tags".padEnd(tagLength);
-  const heading = `${tagHeading} Duration`;
-  const underline = `${"-".repeat(tagLength)} ${"-".repeat(durationLength)}`
+  const tagHeading = underlineString("Tags".padEnd(tagLength));
+  const durationHeading = underlineString("Duration".padEnd(durationLength));
+  const heading = `${tagHeading} ${durationHeading}`;
   const tagDurationPairs = table.map((row) => {
     const tags = streamlineTagsForLogging(row.tags).padEnd(tagLength);
 
@@ -39,6 +41,5 @@ exports.formatForLogging = (table) => {
 
   return `
 ${heading}
-${underline}
 ${content}`;
 };
