@@ -10,5 +10,9 @@
     "date-fns": "^2.29.3",
     "esbuild": "^0.17.4",
     "jest": "^29.3.1"
-  }
+  },
+  "author": {
+    "name": "Christoph Benker"
+  },
+  "license": "MIT"
 }
