@@ -1,11 +1,17 @@
 const streamlineTagsForLogging = (tags = []) => tags.join(", ");
 
+const USAGE = `
+No filtered data found for given range and/or tag, please check if the following command returns anything:
+
+    timew summary [<range>] [<tag>...]
+
+Usage:
+
+    timew [report] recap [<range>] [<tag>...]`;
+
 exports.formatForLogging = (table) => {
   if (!table.length) {
-    return `
-No filtered data found for given range, please check if the following command returns anything:
-
-    timew summary {your-given-range}`;
+    return USAGE;
   }
 
   const tagLength = table.reduce((greatestLength, row) => {

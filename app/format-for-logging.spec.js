@@ -18,8 +18,12 @@ baz, boom 5 minutes`);
     const input = [];
 
     expect(formatForLogging(input)).toEqual(`
-No filtered data found for given range, please check if the following command returns anything:
+No filtered data found for given range and/or tag, please check if the following command returns anything:
 
-    timew summary {your-given-range}`);
+    timew summary [<range>] [<tag>...]
+
+Usage:
+
+    timew [report] recap [<range>] [<tag>...]`);
   });
 });
