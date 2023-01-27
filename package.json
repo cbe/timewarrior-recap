@@ -1,7 +1,6 @@
 {
   "name": "timewarrior-recap",
   "scripts": {
-    "start": "node app/index.js",
     "test": "jest app/*.spec.js",
     "test:watch": "jest --watch app/*.spec.js",
     "build": "esbuild app/index.js --bundle --platform=node --minify --outfile=dist/timewarrior-recap.js"
