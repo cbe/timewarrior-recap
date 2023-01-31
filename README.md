@@ -2,13 +2,17 @@
 
 An extension for [`timewarrior`](https://timewarrior.net/) that helps summarizing work hours/minutes spend on specific tags.
 
+## Installation
+
+Either [build](#buildingdeveloping) the extension yourself or download `recap.js` from the latest [release](https://github.com/cbe/timewarrior-recap/releases) and move it to `~/.timewarrior/extensions`. The script needs the executable permission bit.
+
 ## Usage
 
 ```sh
 timew [report] recap [<range>] [<tag>...]
 ```
 
-ℹ️: This assumes that you installed this extension as `recap.js` (or just `recap`) in the extensions directory, which is usually `~/.timewarrior/extensions`.
+ℹ️ This assumes that you installed this extension as `recap.js` (or just `recap`) in the extensions directory, which is usually `~/.timewarrior/extensions`.
 
 ### Example
 
