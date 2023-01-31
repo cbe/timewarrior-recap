@@ -11,35 +11,48 @@ Usage:
 
     timew [report] recap [<range>] [<tag>...]`;
 
-exports.formatForLogging = (table) => {
-  if (!table.length) {
+exports.formatForLogging = ({activities, summary}) => {
+  if (!activities.length) {
     return USAGE;
   }
 
-  const tagLength = table.reduce((greatestLength, row) => {
-    const tagLength = streamlineTagsForLogging(row.tags).length;
+  const {readableDuration: totalDuration} = summary;
+
+  const tagColumnInitialLength = "Tags".length;
+  const totalColumnInitialLength = "Total".length > totalDuration.length
+    ? "Total".length
+    : totalDuration.length;
+
+  const tagColumnLength = activities.reduce((greatestLength, activity) => {
+    const tagLength = streamlineTagsForLogging(activity.tags).length;
 
     return tagLength > greatestLength ? tagLength : greatestLength;
-  }, "Tags".length);
+  }, tagColumnInitialLength);
 
-  const durationLength = table.reduce((greatestLength, row) => {
-    const durationLength = row.readableDuration.length;
+  const totalColumnLength = activities.reduce((greatestLength, activity) => {
+    const durationLength = activity.readableDuration.length;
 
     return durationLength > greatestLength ? durationLength : greatestLength;
-  }, "Duration".length);
+  }, totalColumnInitialLength);
 
-  const tagHeading = underlineString("Tags".padEnd(tagLength));
-  const durationHeading = underlineString("Duration".padEnd(durationLength));
-  const heading = `${tagHeading} ${durationHeading}`;
-  const tagDurationPairs = table.map((row) => {
-    const tags = streamlineTagsForLogging(row.tags).padEnd(tagLength);
+  const tagHeading = underlineString("Tags".padEnd(tagColumnLength));
+  const durationHeading = underlineString("Total".padEnd(totalColumnLength));
+  const headingLine = `${tagHeading} ${durationHeading}`;
 
-    return `${tags} ${row.readableDuration}`;
+  const activityLines = activities.map((activity) => {
+    const tags = streamlineTagsForLogging(activity.tags).padEnd(tagColumnLength);
+
+    return `${tags} ${activity.readableDuration}`;
   });
-  const content = tagDurationPairs.join(`
+  // Ensure newline after each content line
+  const content = activityLines.join(`
 `);
+  const totalDivider = `${"".padEnd(tagColumnLength)} ${underlineString("".padEnd(totalColumnLength))}`;
+  const totalLine = `${"".padEnd(tagColumnLength)} ${summary.readableDuration.padEnd(totalColumnLength)}`;
 
   return `
-${heading}
-${content}`;
+${headingLine}
+${content}
+${totalDivider}
+${totalLine}`;
 };

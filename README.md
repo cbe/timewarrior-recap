@@ -29,9 +29,11 @@ This extension then prints
 ```sh
 timew report recap :day
 
-Tags                    Duration
+Tags                    Total
 Staff Meeting           4 hours
 They call me work horse 1 hour 30 minutes
+
+                        5 hours 30 minutes
 ```
 
 ## Dependencies
