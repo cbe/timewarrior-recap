@@ -1,24 +1,29 @@
 const {
   parseISO,
-  differenceInMinutes,
+  differenceInMilliseconds,
   formatDuration,
+  millisecondsToMinutes,
   minutesToHours
 } = require("date-fns");
 
 exports.timewarriorRecap = (input) => {
   const activities = convertInputToActivities(input);
-  const durationInMinutes = activities.reduce((sum, current) =>
-    sum = current.durationInMinutes ? sum + current.durationInMinutes : sum,
+  const durationInMilliseconds = activities.reduce((sum, current) =>
+    sum = current.durationInMilliseconds
+      ? sum + current.durationInMilliseconds
+      : sum,
     0
   );
+
+  const durationInMinutes = millisecondsToMinutes(durationInMilliseconds);
   const hours = minutesToHours(durationInMinutes);
   const minutes = durationInMinutes % 60;
-  const readableDuration = formatDuration({ hours, minutes })
+  const readableDuration = formatDuration({ hours, minutes });
 
   return {
     activities,
     summary: {
-      durationInMinutes,
+      durationInMilliseconds,
       readableDuration
     }
   };
@@ -32,20 +37,20 @@ const convertInputToActivities = (input) => input
     const { start: startIso, end: endIso, tags } = interval;
     const start = parseISO(startIso);
     const end = parseISO(endIso);
-    const durationInMinutes = Math.abs(differenceInMinutes(start, end));
+    const durationInMilliseconds = Math.abs(differenceInMilliseconds(start, end));
 
-    return { durationInMinutes, tags };
+    return { durationInMilliseconds, tags };
   })
   .reduce((accumulator, activity) => {
-    const { tags, durationInMinutes } = activity;
+    const { tags, durationInMilliseconds } = activity;
     const streamlinedTags = streamlineTags(tags);
 
     const streamlinedTagIntervalIndex = accumulator.findIndex((interval) =>
       streamlineTags(interval.tags) === streamlinedTags
     );
     if (streamlinedTagIntervalIndex >= 0) {
-      accumulator[streamlinedTagIntervalIndex].durationInMinutes =
-        accumulator[streamlinedTagIntervalIndex].durationInMinutes + durationInMinutes;
+      accumulator[streamlinedTagIntervalIndex].durationInMilliseconds =
+        accumulator[streamlinedTagIntervalIndex].durationInMilliseconds + durationInMilliseconds;
     }
     else {
       accumulator.push(activity);
@@ -54,14 +59,15 @@ const convertInputToActivities = (input) => input
     return accumulator;
   }, [])
   .map((activity) => {
-    const { durationInMinutes, ...rest } = activity;
+    const { durationInMilliseconds, ...rest } = activity;
+    const durationInMinutes = millisecondsToMinutes(durationInMilliseconds);
     const hours = minutesToHours(durationInMinutes);
     const minutes = durationInMinutes % 60;
     const readableDuration = formatDuration({ hours, minutes });
 
     return {
       ...rest,
-      durationInMinutes,
+      durationInMilliseconds,
       readableDuration
     };
   });
