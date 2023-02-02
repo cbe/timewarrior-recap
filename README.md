@@ -4,7 +4,7 @@ An extension for [`timewarrior`](https://timewarrior.net/) that helps summarizin
 
 ## Installation
 
-Either [build](#buildingdeveloping) the extension yourself or download `recap.js` from the latest [release](https://github.com/cbe/timewarrior-recap/releases) and move it to `~/.timewarrior/extensions`. The script needs the executable permission bit.
+Either [build](#buildingdeveloping) the extension yourself or download `recap.js` from the latest [release](https://github.com/cbe/timewarrior-recap/releases/latest) and move it to `~/.timewarrior/extensions`. The script needs the executable permission bit.
 
 ## Usage
 
