@@ -4,8 +4,11 @@ const { createInterface } = require("node:readline");
 const { timewarriorRecap } = require("./timewarrior-recap.js");
 const { formatForLogging } = require("./format-for-logging.js");
 
+const PRINT_JSON = ["true", "on", "1"]
+  .includes(process.env["TIMEWARRIOR_RECAP_JSON"]?.toLowerCase());
+
 const readline = createInterface({
-  input: process.stdin,
+  input: process.stdin
 });
 
 // Configuration block, values look like this:
@@ -40,5 +43,10 @@ readline.on("line", (line) => {
 readline.once("close", () => {
   const report = JSON.parse(gatheredJsonLines.join(""));
 
-  console.log(formatForLogging(timewarriorRecap(report)));
+  if (PRINT_JSON) {
+    console.log(JSON.stringify(timewarriorRecap(report)));
+  }
+  else {
+    console.log(formatForLogging(timewarriorRecap(report)));
+  }
 });
