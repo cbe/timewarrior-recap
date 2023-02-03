@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { createInterface } = require("readline");
+const { createInterface } = require("node:readline");
 const { timewarriorRecap } = require("./timewarrior-recap.js");
 const { formatForLogging } = require("./format-for-logging.js");
 
